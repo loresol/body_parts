@@ -1,29 +1,13 @@
-<h1>Listing body_parts</h1>
+<h1>Listing ideas</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Picture</th>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @body_parts.each do |body_part| %>
-      <tr>
-        <td><%= body_part.description %></td>
-        <td><%= body_part.picture %></td>
-        <td><%= body_part.name %></td>
-        <td><%= link_to 'Show', body_part %></td>
-        <td><%= link_to 'Edit', edit_body_part_path(body_part) %></td>
-        <td><%= link_to 'Destroy', body_part, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<% @body_parts.in_groups_of(3) do |group| %>
+  <div class="row">
+    <% group.compact.each do |body_part| %>
+      <div class="col-md-4">
+        <%= image_tag body_part.picture_url, height: 200 if body_part.picture.present?%>
+        <h4 class="letra-azul"><%= link_to body_part.name, body_part %></h4>
+        <%= body_part.description %>
+      </div>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Body part', new_body_part_path %>
+  </div>
+<% end %>
